@@ -113,14 +113,14 @@ Returned by GET `/orders/active`, `/orders/historical`, `/orders/{venue_order_id
 
 `GET /api/1.0/orders/active`:
 
-| Param | Values | Description |
-|---|---|---|
-| `symbols` | comma-separated | e.g. `BTC-USD,ETH-USD` |
-| `order_states` | `pending_new`, `new`, `partially_filled` | |
-| `order_types` | `limit`, `conditional`, `tpsl` | |
-| `side` | `buy`, `sell` | |
-| `cursor` | string | Pagination cursor from `metadata.next_cursor` |
-| `limit` | 1-100 | Default 100 |
+| Param | Values                                   | Description                                   |
+|---|------------------------------------------|-----------------------------------------------|
+| `symbols` | comma-separated                          | e.g. `BTC-USD,ETH-USD`                        |
+| `order_states` | `pending_new`, `new`, `partially_filled` |                                               |
+| `order_types` | `limit`, `conditional`, `tpsl`           |                                               |
+| `side` | `buy`, `sell`                            |                                               |
+| `cursor` | string                                   | Pagination cursor from `metadata.next_cursor` |
+| `limit` | 1-300                                    | Default 300                                   |
 
 ---
 
@@ -128,14 +128,14 @@ Returned by GET `/orders/active`, `/orders/historical`, `/orders/{venue_order_id
 
 `GET /api/1.0/orders/historical`:
 
-| Param | Values | Description |
-|---|---|---|
-| `symbols` | comma-separated | e.g. `BTC-USD,ETH-USD` |
-| `order_states` | `filled`, `cancelled`, `rejected`, `replaced` | |
-| `order_types` | `market`, `limit` | |
-| `start_date` / `end_date` | int64 ms | Max 30-day range |
-| `cursor` | string | Pagination cursor |
-| `limit` | 1-100 | Default 100 |
+| Param | Values                                        | Description            |
+|---|-----------------------------------------------|------------------------|
+| `symbols` | comma-separated                               | e.g. `BTC-USD,ETH-USD` |
+| `order_states` | `filled`, `cancelled`, `rejected`, `replaced` |                        |
+| `order_types` | `market`, `limit`                             |                        |
+| `start_date` / `end_date` | int64 ms                                      | Max 30-day range       |
+| `cursor` | string                                        | Pagination cursor      |
+| `limit` | 1-1900                                        | Default 1900           |
 
 ---
 

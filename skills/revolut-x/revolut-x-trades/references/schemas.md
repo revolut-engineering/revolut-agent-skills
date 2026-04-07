@@ -77,12 +77,12 @@ Both public and private trades use abbreviated field names in the raw response:
 
 Used by `/trades/all/{symbol}` and `/trades/private/{symbol}`:
 
-| Param | Type | Default | Description |
-|---|---|---|---|
-| `start_date` | int64 (ms) | `end_date - 7 days` | Start of date range |
-| `end_date` | int64 (ms) | `start_date + 7 days` or now | End of date range |
-| `cursor` | string | — | Pagination cursor from `metadata.next_cursor` |
-| `limit` | integer (1-100) | 100 | Results per page |
+| Param | Type             | Default                      | Description                                   |
+|---|------------------|------------------------------|-----------------------------------------------|
+| `start_date` | int64 (ms)       | `end_date - 7 days`          | Start of date range |
+| `end_date` | int64 (ms)       | `start_date + 7 days` or now | End of date range |
+| `cursor` | string           | —                            | Pagination cursor from `metadata.next_cursor` |
+| `limit` | integer (1-1900) | 1900                         | Results per page |
 
 **Max range: 30 days** — difference between `start_date` and `end_date` must not exceed 30 days.
 

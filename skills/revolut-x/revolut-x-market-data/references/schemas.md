@@ -51,10 +51,10 @@
 | Param | Type | Default | Description |
 |---|---|---|---|
 | `interval` | integer (minutes) | `5` | Candle width: `1`, `5`, `15`, `30`, `60`, `240`, `1440`, `2880`, `5760`, `10080`, `20160`, `40320` |
-| `since` | int64 (ms) | `until - (interval * 100)` | Start of range |
+| `since` | int64 (ms) | `until - (5000 * interval * 60000)` | Start of range |
 | `until` | int64 (ms) | current time | End of range |
 
-**Constraint:** Max 1000 candles per request: `(until - since) / (interval * 60000) <= 1000`
+**Constraint:** Max 50000 candles per request: `(until - since) / (interval * 60000) <= 50000`
 
 If no trades occurred in a period, candle is based on mid price (bid/ask average).
 
