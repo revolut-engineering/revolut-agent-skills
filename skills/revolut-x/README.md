@@ -18,7 +18,7 @@ Agent skills for the [Revolut X Crypto Exchange REST API](https://developer.revo
 
 Each skill includes a `scripts/` folder with request helpers and a `references/` folder with detailed API schemas.
 
-## Getting started
+## Get started
 
 Set the following environment variables before using any authenticated skill:
 
