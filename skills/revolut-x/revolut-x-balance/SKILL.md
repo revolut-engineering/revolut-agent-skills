@@ -1,16 +1,34 @@
 ---
 name: revolut-x-balance
+version: 0.1.0
 description: >
-  Revolut X account balance queries. Use when the user asks to "check my balance",
-  "how much BTC do I have", "show my portfolio", "view available funds", or needs
-  to verify funds before placing an order on Revolut X.
+  Revolut X account balance queries — available, reserved, staked, and total
+  funds per currency. Verify funds before placing orders.
+allowed-tools: [Bash]
+sources:
+  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
+  - https://developer.revolut.com/docs/x-api/get-all-balances
 ---
 
 # Revolut X Balance
 
-## Instructions
+## Capabilities
 
-### Step 1: Fetch balances
+- Fetch all account balances (available, reserved, staked, total)
+- Verify sufficient funds before placing orders
+- Compute portfolio value in fiat using ticker data
+
+## Authentication & setup
+
+All endpoints require authentication. See [revolut-x-auth](../revolut-x-auth/SKILL.md) for setup.
+
+## API versioning
+
+All endpoints use path-based versioning: `/api/1.0/`. The version is included in every request path.
+
+## Common workflows
+
+### Fetch balances
 
 ```bash
 python scripts/revx_sign.py GET /api/1.0/balances
@@ -18,17 +36,11 @@ python scripts/revx_sign.py GET /api/1.0/balances
 
 Expected output: JSON array of balance objects with `currency`, `available`, `reserved`, `staked`, `total` fields.
 
-### Step 2: Present results
-
 Display balances in a readable table. Key fields:
 - **available** — funds ready for new orders
 - **reserved** — locked by open orders
 - **staked** — earning staking rewards
 - **total** — available + reserved + staked
-
----
-
-## Examples
 
 ### Example 1: Check portfolio balances
 User says: "What's my balance on Revolut X?"
@@ -61,9 +73,7 @@ Actions:
 
 Result: Total portfolio value in USD.
 
----
-
-## Troubleshooting
+## Error handling
 
 **Error: 401 Unauthorized**
 Cause: API key or signature invalid
@@ -73,9 +83,15 @@ Solution: Run `revolut-x-auth` setup. Verify `REVX_API_KEY` and `REVX_PRIVATE_KE
 Cause: Too many requests
 Solution: Wait for duration in `Retry-After` header (milliseconds), then retry.
 
-For full response field definitions, see `references/schemas.md`.
+## Important notes
 
----
+- Balance `available` reflects funds not locked by open orders — use this for pre-order validation
+- Zero-balance currencies may still appear in the response
+- To compute fiat portfolio value, combine with ticker data from `revolut-x-market-data`
+
+## References
+
+- [schemas.md](references/schemas.md) — Full response field definitions
 
 ## Related Skills
 

@@ -1,14 +1,34 @@
 ---
 name: revolut-x-market-data
+version: 0.1.0
 description: >
-  Revolut X authenticated market data. Use when the user asks for "order book",
-  "price of BTC", "candles", "OHLCV", "ticker", "bid ask spread", "candlestick
-  chart", or needs detailed market data for analysis or trading decisions.
+  Revolut X authenticated market data — tickers, OHLCV candles, and order book
+  (20 levels). For analysis and trading decisions.
+allowed-tools: [Bash]
+sources:
+  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
+  - https://developer.revolut.com/docs/x-api/get-ticker
+  - https://developer.revolut.com/docs/x-api/get-order-book
+  - https://developer.revolut.com/docs/x-api/get-candles
 ---
 
 # Revolut X Market Data
 
-## Instructions
+## Capabilities
+
+- Fetch ticker prices (bid, ask, mid, last) for all or specific pairs
+- Retrieve OHLCV candles at multiple intervals (1m to 4w)
+- View order book depth (up to 20 price levels)
+
+## Authentication & setup
+
+All endpoints require authentication. See [revolut-x-auth](../revolut-x-auth/SKILL.md) for setup.
+
+## API versioning
+
+All endpoints use path-based versioning: `/api/1.0/`. The version is included in every request path.
+
+## Common workflows
 
 ### Get ticker prices
 
@@ -45,10 +65,6 @@ Query parameters:
 - Max 1000 candles per request
 
 Expected output: JSON array of candles — each with `start`, `open`, `high`, `low`, `close`, `volume`.
-
----
-
-## Examples
 
 ### Example 1: Check current price
 User says: "What's the price of BTC?"
@@ -87,19 +103,7 @@ Actions:
 
 Result: Price overview for all trading pairs.
 
----
-
-## Important Notes
-
-- Candle `interval` is in **minutes** as an integer (60 = 1 hour, 1440 = 1 day)
-- Ticker `symbol` in responses uses slash format (`BTC/USD`), request params use dash (`BTC-USD`)
-- For unauthenticated order book (5 levels only), see `revolut-x-public-market-data`
-
-For full response field definitions, see `references/schemas.md`.
-
----
-
-## Troubleshooting
+## Error handling
 
 **Error: 400 Bad Request**
 Cause: Invalid symbol or interval value
@@ -109,7 +113,15 @@ Solution: Check symbol uses dash format in URL. Use valid interval: 1, 5, 15, 30
 Cause: API key or signature invalid
 Solution: Run `revolut-x-auth` setup.
 
----
+## Important notes
+
+- Candle `interval` is in **minutes** as an integer (60 = 1 hour, 1440 = 1 day)
+- Ticker `symbol` in responses uses slash format (`BTC/USD`), request params use dash (`BTC-USD`)
+- For unauthenticated order book (5 levels only), see `revolut-x-public-market-data`
+
+## References
+
+- [schemas.md](references/schemas.md) — Full response field definitions
 
 ## Related Skills
 

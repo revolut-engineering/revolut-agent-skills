@@ -1,14 +1,27 @@
 ---
 name: revolut-x-auth
+version: 0.1.0
 description: >
-  Revolut X API authentication setup and request signing. Use when the user asks
-  to "set up Revolut X API", "configure API keys", "generate Ed25519 keypair",
-  "sign requests", or encounters 401/403 authentication errors from Revolut X.
+  Revolut X API authentication setup, Ed25519 keypair generation, and request
+  signing. Handles API key configuration and 401/403 auth errors.
+allowed-tools: [Bash]
+sources:
+  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
+  - https://github.com/revolut-engineering/revolut-openapi
 ---
 
 # Revolut X Authentication
 
-## Instructions
+## Capabilities
+
+- Generate Ed25519 keypairs for API authentication
+- Configure API key and private key environment variables
+- Sign authenticated requests via `scripts/revx_sign.py`
+- Debug 401/403/409 authentication errors
+
+## Authentication & setup
+
+This skill handles authentication setup for all other Revolut X skills.
 
 ### Step 1: Generate an Ed25519 keypair
 
@@ -40,9 +53,13 @@ python scripts/revx_sign.py GET /api/1.0/balances
 
 Expected output: JSON array of account balances. If you see this, auth is working.
 
----
+## API versioning
 
-## How Request Signing Works
+All endpoints use path-based versioning: `/api/1.0/`. The version is included in every request path.
+
+## Common workflows
+
+### How request signing works
 
 Every authenticated request needs three headers:
 
@@ -60,17 +77,13 @@ Message to sign (concatenate with **no separators**):
 
 The `scripts/revx_sign.py` helper handles all of this automatically. For manual implementation details, see `references/signing-examples.md`.
 
----
-
-## Examples
-
 ### Example 1: First-time setup
 User says: "Help me set up Revolut X API access"
 
 Actions:
 1. Run `openssl genpkey -algorithm ed25519 -out private.pem`
 2. Run `openssl pkey -in private.pem -pubout -out public.pem`
-3. Instruct user to register public key at exchange.revolut.com
+3. Ask the user to register the public key at exchange.revolut.com
 4. Set env vars: `REVX_API_KEY` and `REVX_PRIVATE_KEY`
 5. Verify with `python scripts/revx_sign.py GET /api/1.0/balances`
 
@@ -87,9 +100,7 @@ Actions:
 
 Result: Identify and fix the auth issue.
 
----
-
-## Troubleshooting
+## Error handling
 
 **Error: 401 Unauthorized**
 Cause: Invalid API key or signature
@@ -103,9 +114,7 @@ Solution: Check API key settings in exchange.revolut.com.
 Cause: Timestamp skew — system clock is too far off
 Solution: Sync system clock. Timestamp must be within a few seconds of server time.
 
----
-
-## Important Notes
+## Important notes
 
 - **Private keys are secret** — never share, commit, or include in requests
 - Timestamp must be Unix epoch in **milliseconds**, not seconds
@@ -113,9 +122,9 @@ Solution: Sync system clock. Timestamp must be within a few seconds of server ti
 - For GET/DELETE without body, omit body from signature entirely
 - Base URL: `https://revx.revolut.com/api/1.0`
 
-For full Python and Node.js signing code, see `references/signing-examples.md`.
+## References
 
----
+- [signing-examples.md](references/signing-examples.md) — Full Python and Node.js signing code
 
 ## Related Skills
 

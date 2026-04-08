@@ -1,16 +1,37 @@
 ---
 name: revolut-x-trades
+version: 0.1.0
 description: >
-  Revolut X trade data. Use when the user asks to "view trade history", "get fills",
-  "see recent trades", "check my trades", "execution details", "order fills", or
-  needs fill information for completed orders on Revolut X.
+  Revolut X trade data — trade history, fills, execution details for completed
+  orders. Supports pagination and date filtering.
+allowed-tools: [Bash]
+sources:
+  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
+  - https://developer.revolut.com/docs/x-api/get-all-trades
+  - https://developer.revolut.com/docs/x-api/get-private-trades
+  - https://developer.revolut.com/docs/x-api/get-order-fills
 ---
 
 # Revolut X Trades
 
-## Instructions
+## Capabilities
 
-### Get all public trades for a symbol
+- Fetch all market trades for a symbol (with date range filtering)
+- Fetch private trades (fills) for your account
+- Get fills for a specific order
+- Paginate through large trade result sets
+
+## Authentication & setup
+
+All endpoints require authentication. See [revolut-x-auth](../revolut-x-auth/SKILL.md) for setup.
+
+## API versioning
+
+All endpoints use path-based versioning: `/api/1.0/`. The version is included in every request path.
+
+## Common workflows
+
+### Get all market trades for a symbol
 
 ```bash
 python scripts/revx_sign.py GET /api/1.0/trades/all/BTC-USD
@@ -48,10 +69,6 @@ If `metadata.next_cursor` is present in the response, pass it to get the next pa
 python scripts/revx_sign.py GET /api/1.0/trades/private/BTC-USD --query '?cursor=CURSOR_VALUE&limit=100'
 ```
 
----
-
-## Examples
-
 ### Example 1: Check my recent BTC fills
 User says: "Show me my recent BTC-USD trades"
 
@@ -82,20 +99,7 @@ Actions:
 
 Result: All execution details for that order.
 
----
-
-## Important Notes
-
-- **Max date range: 30 days** — requests spanning more than 30 days are rejected
-- Trade response `symbol` uses **slash format** (`BTC/USD`); request path uses **dash format** (`BTC-USD`)
-- Default range is 7 days if only one of `start_date`/`end_date` is specified
-- `maker: true` = your order was resting on the book; `false` = your order was aggressive
-
-For full response schemas and raw wire format, see `references/schemas.md`.
-
----
-
-## Troubleshooting
+## Error handling
 
 **Error: 400 Bad Request**
 Cause: Date range exceeds 30 days or invalid symbol
@@ -105,7 +109,16 @@ Solution: Narrow the date range. Check symbol uses dash format.
 Cause: API key or signature invalid
 Solution: Run `revolut-x-auth` setup.
 
----
+## Important notes
+
+- **Max date range: 30 days** — requests spanning more than 30 days are rejected
+- Trade response `symbol` uses **slash format** (`BTC/USD`); request path uses **dash format** (`BTC-USD`)
+- Default range is 7 days if only one of `start_date`/`end_date` is specified
+- `maker: true` = your order was resting on the book; `false` = your order was aggressive
+
+## References
+
+- [schemas.md](references/schemas.md) — Full response schemas and raw wire format
 
 ## Related Skills
 

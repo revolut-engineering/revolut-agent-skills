@@ -1,57 +1,50 @@
 ---
 name: revolut-x-orders
+version: 0.1.0
 description: >
-  Revolut X order management. Use when the user asks to "place an order", "buy BTC",
-  "sell ETH", "market order", "limit order", "cancel order", "cancel all orders",
-  "view open orders", "order history", or anything related to trading on Revolut X.
+  Revolut X order management — place market/limit orders, view active/historical
+  orders, cancel orders. Handles order lifecycle.
+allowed-tools: [Bash]
+sources:
+  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
+  - https://developer.revolut.com/docs/x-api/place-order
+  - https://developer.revolut.com/docs/x-api/get-active-orders
+  - https://developer.revolut.com/docs/x-api/get-historical-orders
+  - https://developer.revolut.com/docs/x-api/get-order
+  - https://developer.revolut.com/docs/x-api/cancel-order
+  - https://developer.revolut.com/docs/x-api/cancel-all-orders
 ---
 
 # Revolut X Orders
 
-## Behavioral Instructions for Claude
+## Capabilities
 
-### CRITICAL: Human Confirmation Required
+- Place market orders (buy/sell by base or quote size)
+- Place limit orders (with `allow_taker` or `post_only` execution)
+- View active and historical orders
+- Cancel individual orders or all open orders
+- Pre-flight validation (pair constraints + balance check)
 
-**NEVER place or cancel orders without explicit user confirmation.** These operations move real money.
+## Authentication & setup
 
-Before executing, present a confirmation summary:
+All endpoints require authentication. See [revolut-x-auth](../revolut-x-auth/SKILL.md) for setup.
 
-> **Order to place:**
-> - Pair: BTC-USD
-> - Side: buy
-> - Type: limit @ $95,000
-> - Size: 0.001 BTC
->
-> Shall I proceed?
+## API versioning
 
-Only execute after the user explicitly approves.
+All endpoints use path-based versioning: `/api/1.0/`. The version is included in every request path.
 
-For cancel-all (`DELETE /api/1.0/orders`), warn that this cancels **every** open order.
-
-### Missing Parameters — Always Ask, Never Guess
-
-Required for every order:
-1. **Symbol** — which pair? (e.g. `BTC-USD`)
-2. **Side** — buy or sell?
-3. **Size** — how much? (base_size or quote_size)
-4. **Order type** — market or limit? (if limit, at what price?)
-
-If the user says "buy some BTC", ask: How much? Market or limit?
-
----
-
-## Instructions
+## Common workflows
 
 ### Place a market order
 
 ```bash
-python scripts/revx_sign.py POST /api/1.0/orders --body '{"client_order_id":"UUID","symbol":"BTC-USD","side":"buy","order_configuration":{"market":{"quote_size":"500"}}}'
+python scripts/revx_sign.py POST /api/1.0/orders --body '{"client_order_id":"<uuid>","symbol":"BTC-USD","side":"buy","order_configuration":{"market":{"quote_size":"500"}}}'
 ```
 
 ### Place a limit order
 
 ```bash
-python scripts/revx_sign.py POST /api/1.0/orders --body '{"client_order_id":"UUID","symbol":"BTC-USD","side":"buy","order_configuration":{"limit":{"price":"95000","base_size":"0.001","execution_instructions":["allow_taker"]}}}'
+python scripts/revx_sign.py POST /api/1.0/orders --body '{"client_order_id":"<uuid>","symbol":"BTC-USD","side":"buy","order_configuration":{"limit":{"price":"95000","base_size":"0.001","execution_instructions":["allow_taker"]}}}'
 ```
 
 Execution instructions: `allow_taker` (default) or `post_only` (maker only — cancelled if would execute immediately).
@@ -96,18 +89,12 @@ python scripts/revx_sign.py DELETE /api/1.0/orders
 
 **Warning:** Cancels every open limit, conditional, and TPSL order.
 
----
-
-## Pre-flight Validation
+### Pre-flight validation
 
 Before placing any order:
 1. Check pair is active and get constraints: `python scripts/revx_sign.py GET /api/1.0/configuration/pairs` (see `revolut-x-configuration`)
 2. Check sufficient balance: `python scripts/revx_sign.py GET /api/1.0/balances` (see `revolut-x-balance`)
 3. Verify order size meets min/max constraints
-
----
-
-## Examples
 
 ### Example 1: Place a market buy
 User says: "Buy $500 worth of BTC at market price"
@@ -127,7 +114,7 @@ User says: "Sell 0.1 ETH at $3,500, maker only"
 Actions:
 1. Validate pair and balance
 2. Present confirmation summary
-3. Run `python scripts/revx_sign.py POST /api/1.0/orders --body '{"client_order_id":"UUID","symbol":"ETH-USD","side":"sell","order_configuration":{"limit":{"price":"3500","base_size":"0.1","execution_instructions":["post_only"]}}}'`
+3. Run `python scripts/revx_sign.py POST /api/1.0/orders --body '{"client_order_id":"<uuid>","symbol":"ETH-USD","side":"sell","order_configuration":{"limit":{"price":"3500","base_size":"0.1","execution_instructions":["post_only"]}}}'`
 
 Result: Post-only limit order placed.
 
@@ -150,20 +137,7 @@ Actions:
 
 Result: All open orders cancelled.
 
----
-
-## Important Notes
-
-- **Limit order rate limit:** 1000 placements per day
-- `client_order_id` is for idempotency — use a unique UUID for each order
-- Market orders: specify `base_size` OR `quote_size`, not both
-- Symbols use **dash format** (`BTC-USD`) in requests
-
-For full request/response schemas, order statuses, time-in-force values, and query filters, see `references/schemas.md`.
-
----
-
-## Troubleshooting
+## Error handling
 
 **Error: 400 Bad Request**
 Cause: Invalid params, insufficient funds, or order rejected
@@ -177,7 +151,19 @@ Solution: Verify the order ID from active orders or placement response.
 Cause: Too many requests (or 1000 limit orders/day exceeded)
 Solution: Wait for `Retry-After` header duration, then retry.
 
----
+## Important notes
+
+- **NEVER place or cancel orders without explicit user confirmation.** These operations move real money. Before executing, present a confirmation summary and wait for approval. Execute only after the user explicitly approves.
+- For cancel-all (`DELETE /api/1.0/orders`), warn that this cancels **every** open order.
+- Required parameters for every order: **symbol**, **side**, **size** (base_size or quote_size), **order type** (market or limit). If any are missing, ask — never guess.
+- **Limit order rate limit:** 1000 placements per day
+- `client_order_id` is for idempotency — use a unique UUID for each order
+- Market orders: specify `base_size` OR `quote_size`, not both
+- Symbols use **dash format** (`BTC-USD`) in requests
+
+## References
+
+- [schemas.md](references/schemas.md) — Full request/response schemas, order statuses, time-in-force values, and query filters
 
 ## Related Skills
 

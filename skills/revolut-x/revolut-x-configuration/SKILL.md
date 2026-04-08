@@ -1,14 +1,32 @@
 ---
 name: revolut-x-configuration
+version: 0.1.0
 description: >
-  Revolut X exchange configuration data. Use when the user asks about "available
-  currencies", "trading pairs", "supported assets", "pair constraints", "min order
-  size", "max order size", or needs to validate a symbol before placing an order.
+  Revolut X exchange configuration — available currencies, trading pairs,
+  pair constraints (min/max order size, step), and asset status.
+allowed-tools: [Bash]
+sources:
+  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
+  - https://developer.revolut.com/docs/x-api/get-all-currencies
 ---
 
 # Revolut X Configuration
 
-## Instructions
+## Capabilities
+
+- List all available currencies with type, scale, and status
+- List all trading pairs with constraints (min/max order size, step)
+- Validate whether a pair is active before placing orders
+
+## Authentication & setup
+
+All endpoints require authentication. See [revolut-x-auth](../revolut-x-auth/SKILL.md) for setup.
+
+## API versioning
+
+All endpoints use path-based versioning: `/api/1.0/`. The version is included in every request path.
+
+## Common workflows
 
 ### Get all currencies
 
@@ -26,11 +44,7 @@ python scripts/revx_sign.py GET /api/1.0/configuration/pairs
 
 Expected output: JSON map keyed by pair (e.g. `BTC/USD`) with `base`, `quote`, `min_order_size`, `max_order_size`, `base_step`, `quote_step`, `status`.
 
-**CRITICAL:** Always check pair `status` is `active` before placing orders. Warn the user if a pair is `inactive`.
-
----
-
-## Examples
+**CRITICAL:** Always check pair `status` is `active` before placing orders. Flag inactive pairs before proceeding.
 
 ### Example 1: Check if a pair is tradeable
 User says: "Can I trade SOL-USD on Revolut X?"
@@ -61,24 +75,20 @@ Actions:
 
 Result: Table of supported cryptocurrencies with name, symbol, and precision.
 
----
-
-## Important Notes
-
-- Pairs response uses **slash format** (`BTC/USD`) in keys, but order placement uses **dash format** (`BTC-USD`)
-- Always validate pair constraints before placing orders (see `revolut-x-orders`)
-
-For full response field definitions, see `references/schemas.md`.
-
----
-
-## Troubleshooting
+## Error handling
 
 **Error: 401 Unauthorized**
 Cause: API key or signature invalid
 Solution: Run `revolut-x-auth` setup.
 
----
+## Important notes
+
+- Pairs response uses **slash format** (`BTC/USD`) in keys, but order placement uses **dash format** (`BTC-USD`)
+- Always validate pair constraints before placing orders (see `revolut-x-orders`)
+
+## References
+
+- [schemas.md](references/schemas.md) — Full response field definitions
 
 ## Related Skills
 
