@@ -1,15 +1,13 @@
 ---
 name: revolut-x-market-data
-version: 0.1.0
 description: >
-  Revolut X authenticated market data — tickers, OHLCV candles, and order book
-  (20 levels). For analysis and trading decisions.
-allowed-tools: [Bash]
-sources:
-  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
-  - https://developer.revolut.com/docs/x-api/get-ticker
-  - https://developer.revolut.com/docs/x-api/get-order-book
-  - https://developer.revolut.com/docs/x-api/get-candles
+  Revolut X authenticated market data — ticker prices (bid/ask/mid/last), OHLCV candles at
+  multiple intervals, and order book depth up to 20 levels. Use when the user asks for the
+  price of a crypto asset, candlestick data, order book depth, or bid/ask spread on Revolut X.
+allowed-tools: Bash
+compatibility: Requires Python 3 and the bundled scripts/revx_sign.py helper
+metadata:
+  version: "0.1.0"
 ---
 
 # Revolut X Market Data
@@ -122,6 +120,8 @@ Solution: Run `revolut-x-auth` setup.
 ## References
 
 - [schemas.md](references/schemas.md) — Full response field definitions
+- [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
+- [Get ticker](https://developer.revolut.com/docs/x-api/get-ticker) · [Get order book](https://developer.revolut.com/docs/x-api/get-order-book) · [Get candles](https://developer.revolut.com/docs/x-api/get-candles)
 
 ## Related Skills
 

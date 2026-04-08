@@ -1,13 +1,13 @@
 ---
 name: revolut-x-configuration
-version: 0.1.0
 description: >
-  Revolut X exchange configuration — available currencies, trading pairs,
-  pair constraints (min/max order size, step), and asset status.
-allowed-tools: [Bash]
-sources:
-  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
-  - https://developer.revolut.com/docs/x-api/get-all-currencies
+  Revolut X exchange configuration — available currencies, trading pairs, and pair constraints
+  (min/max order size, step, status). Use when checking supported assets, validating a symbol,
+  or looking up order size constraints before placing a trade.
+allowed-tools: Bash
+compatibility: Requires Python 3 and the bundled scripts/revx_sign.py helper
+metadata:
+  version: "0.1.0"
 ---
 
 # Revolut X Configuration
@@ -89,6 +89,8 @@ Solution: Run `revolut-x-auth` setup.
 ## References
 
 - [schemas.md](references/schemas.md) — Full response field definitions
+- [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
+- [Get all currencies](https://developer.revolut.com/docs/x-api/get-all-currencies)
 
 ## Related Skills
 

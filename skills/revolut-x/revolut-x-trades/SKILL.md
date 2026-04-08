@@ -1,15 +1,13 @@
 ---
 name: revolut-x-trades
-version: 0.1.0
 description: >
-  Revolut X trade data — trade history, fills, execution details for completed
-  orders. Supports pagination and date filtering.
-allowed-tools: [Bash]
-sources:
-  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
-  - https://developer.revolut.com/docs/x-api/get-all-trades
-  - https://developer.revolut.com/docs/x-api/get-private-trades
-  - https://developer.revolut.com/docs/x-api/get-order-fills
+  Revolut X trade data — market trade history, private fills, and execution details for completed
+  orders, with pagination and date filtering. Use when the user asks to view trade history,
+  check fills, see recent trades, or analyse order execution on Revolut X.
+allowed-tools: Bash
+compatibility: Requires Python 3 and the bundled scripts/revx_sign.py helper
+metadata:
+  version: "0.1.0"
 ---
 
 # Revolut X Trades
@@ -119,6 +117,8 @@ Solution: Run `revolut-x-auth` setup.
 ## References
 
 - [schemas.md](references/schemas.md) — Full response schemas and raw wire format
+- [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
+- [Get all trades](https://developer.revolut.com/docs/x-api/get-all-trades) · [Get private trades](https://developer.revolut.com/docs/x-api/get-private-trades) · [Get order fills](https://developer.revolut.com/docs/x-api/get-order-fills)
 
 ## Related Skills
 

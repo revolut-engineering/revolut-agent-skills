@@ -1,13 +1,13 @@
 ---
 name: revolut-x-balance
-version: 0.1.0
 description: >
-  Revolut X account balance queries — available, reserved, staked, and total
-  funds per currency. Verify funds before placing orders.
-allowed-tools: [Bash]
-sources:
-  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
-  - https://developer.revolut.com/docs/x-api/get-all-balances
+  Revolut X account balance queries — available, reserved, staked, and total funds per currency.
+  Use when the user asks to check their balance, view their portfolio, or verify they have
+  sufficient funds before placing an order on Revolut X.
+allowed-tools: Bash
+compatibility: Requires Python 3 and the bundled scripts/revx_sign.py helper
+metadata:
+  version: "0.1.0"
 ---
 
 # Revolut X Balance
@@ -92,6 +92,8 @@ Solution: Wait for duration in `Retry-After` header (milliseconds), then retry.
 ## References
 
 - [schemas.md](references/schemas.md) — Full response field definitions
+- [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
+- [Get all balances](https://developer.revolut.com/docs/x-api/get-all-balances)
 
 ## Related Skills
 

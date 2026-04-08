@@ -1,14 +1,13 @@
 ---
 name: revolut-x-public-market-data
-version: 0.1.0
 description: >
-  Revolut X public market data (no auth required) — public order book (5 levels)
-  and latest trades across all pairs.
-allowed-tools: [Bash]
-sources:
-  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
-  - https://developer.revolut.com/docs/x-api/get-last-trades
-  - https://developer.revolut.com/docs/x-api/get-public-order-book
+  Revolut X public market data — public order book (5 price levels) and latest 100 trades across
+  all pairs. No authentication required. Use when the user wants a quick price check or recent
+  trade data and has not configured API keys, or asks about public market data.
+allowed-tools: Bash
+compatibility: Requires Python 3 and the bundled scripts/revx_request.py helper
+metadata:
+  version: "0.1.0"
 ---
 
 # Revolut X Public Market Data
@@ -83,6 +82,8 @@ Solution: Use `BASE-QUOTE` dash format in the URL path, e.g. `BTC-USD`.
 ## References
 
 - [schemas.md](references/schemas.md) — Full wire format field mappings
+- [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
+- [Get last trades](https://developer.revolut.com/docs/x-api/get-last-trades) · [Get public order book](https://developer.revolut.com/docs/x-api/get-public-order-book)
 
 ## Related Skills
 

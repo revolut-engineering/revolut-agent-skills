@@ -1,13 +1,13 @@
 ---
 name: revolut-x-auth
-version: 0.1.0
 description: >
-  Revolut X API authentication setup, Ed25519 keypair generation, and request
-  signing. Handles API key configuration and 401/403 auth errors.
-allowed-tools: [Bash]
-sources:
-  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
-  - https://github.com/revolut-engineering/revolut-openapi
+  Revolut X API authentication setup, Ed25519 keypair generation, and request signing.
+  Use when the user asks to set up Revolut X API access, configure API keys, generate an
+  Ed25519 keypair, sign requests manually, or debug 401/403/409 authentication errors.
+allowed-tools: Bash
+compatibility: Requires Python 3 and OpenSSL (bundled scripts/revx_sign.py helper)
+metadata:
+  version: "0.1.0"
 ---
 
 # Revolut X Authentication
@@ -125,6 +125,8 @@ Solution: Sync system clock. Timestamp must be within a few seconds of server ti
 ## References
 
 - [signing-examples.md](references/signing-examples.md) — Full Python and Node.js signing code
+- [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
+- [Revolut OpenAPI spec](https://github.com/revolut-engineering/revolut-openapi)
 
 ## Related Skills
 

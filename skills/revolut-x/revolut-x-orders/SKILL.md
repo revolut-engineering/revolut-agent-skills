@@ -1,18 +1,13 @@
 ---
 name: revolut-x-orders
-version: 0.1.0
 description: >
-  Revolut X order management — place market/limit orders, view active/historical
-  orders, cancel orders. Handles order lifecycle.
-allowed-tools: [Bash]
-sources:
-  - https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api
-  - https://developer.revolut.com/docs/x-api/place-order
-  - https://developer.revolut.com/docs/x-api/get-active-orders
-  - https://developer.revolut.com/docs/x-api/get-historical-orders
-  - https://developer.revolut.com/docs/x-api/get-order
-  - https://developer.revolut.com/docs/x-api/cancel-order
-  - https://developer.revolut.com/docs/x-api/cancel-all-orders
+  Revolut X order management — place market or limit orders, view active and historical orders,
+  and cancel orders. Use when the user asks to buy or sell crypto, place a market or limit order,
+  check open orders, cancel an order, or anything related to trading on Revolut X.
+allowed-tools: Bash
+compatibility: Requires Python 3 and the bundled scripts/revx_sign.py helper
+metadata:
+  version: "0.1.0"
 ---
 
 # Revolut X Orders
@@ -164,6 +159,9 @@ Solution: Wait for `Retry-After` header duration, then retry.
 ## References
 
 - [schemas.md](references/schemas.md) — Full request/response schemas, order statuses, time-in-force values, and query filters
+- [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
+- [Place order](https://developer.revolut.com/docs/x-api/place-order) · [Get active orders](https://developer.revolut.com/docs/x-api/get-active-orders) · [Get historical orders](https://developer.revolut.com/docs/x-api/get-historical-orders)
+- [Get order](https://developer.revolut.com/docs/x-api/get-order) · [Cancel order](https://developer.revolut.com/docs/x-api/cancel-order) · [Cancel all orders](https://developer.revolut.com/docs/x-api/cancel-all-orders)
 
 ## Related Skills
 
