@@ -39,8 +39,6 @@ You can install Revolut Agent Skills automatically via the `skills` CLI or by co
 
 ### Option A: Using the skills CLI (Recommended)
 
-<!-- DEV: confirm this CLI exists and the package name/command is correct -->
-
 The `skills` CLI handles downloading and placing the skills in the correct directories for your active AI agents.
 
 #### 1. Project-level (Default)
@@ -87,7 +85,7 @@ If you prefer not to use the CLI, you can install the skills manually into your 
 
     <!-- DEV: confirm public repo URL -->
 
-2. **Copy the desired skill folders** from the `skills/` directory into your agent's local directory.
+1. **Copy the desired skill folders** from the `skills/` directory into your agent's local directory.
 
     <!-- DEV: confirm target directory conventions per agent host -->
     - For **Cursor** or **GitHub Copilot**: `.agents/skills/`
