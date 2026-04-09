@@ -23,13 +23,13 @@ AI agents often struggle with specific API nuances. These skills follow the [Age
 
 | Skill | Description | Version | Author |
 | ----- | ----------- | ------- | ------ |
-| [revolut-x-auth](skills/revolut-x/revolut-x-auth/) | API key setup, Ed25519 signing, environment configuration | — | — |
-| [revolut-x-configuration](skills/revolut-x/revolut-x-configuration/) | Available currencies and trading pair constraints | — | — |
-| [revolut-x-balance](skills/revolut-x/revolut-x-balance/) | Account balances (available, reserved, staked) | — | — |
-| [revolut-x-orders](skills/revolut-x/revolut-x-orders/) | Place, cancel, and query orders (market, limit, conditional, TPSL) | — | — |
-| [revolut-x-trades](skills/revolut-x/revolut-x-trades/) | Trade history, personal fills, order execution details | — | — |
-| [revolut-x-market-data](skills/revolut-x/revolut-x-market-data/) | Order book depth, OHLCV candles, ticker prices | — | — |
-| [revolut-x-public-market-data](skills/revolut-x/revolut-x-public-market-data/) | Public trades and order book (no auth required) | — | — |
+| [revolut-x-auth](skills/revolut-x/revolut-x-auth/) | API key setup, Ed25519 signing, environment configuration | 0.1.0 | — |
+| [revolut-x-configuration](skills/revolut-x/revolut-x-configuration/) | Available currencies and trading pair constraints | 0.1.0 | — |
+| [revolut-x-balance](skills/revolut-x/revolut-x-balance/) | Account balances (available, reserved, staked) | 0.1.0 | — |
+| [revolut-x-orders](skills/revolut-x/revolut-x-orders/) | Place, cancel, and query orders (market, limit, conditional, TPSL) | 0.1.0 | — |
+| [revolut-x-trades](skills/revolut-x/revolut-x-trades/) | Trade history, personal fills, order execution details | 0.1.0 | — |
+| [revolut-x-market-data](skills/revolut-x/revolut-x-market-data/) | Order book depth, OHLCV candles, ticker prices | 0.1.0 | — |
+| [revolut-x-public-market-data](skills/revolut-x/revolut-x-public-market-data/) | Public trades and order book (no auth required) | 0.1.0 | — |
 
 ---
 
