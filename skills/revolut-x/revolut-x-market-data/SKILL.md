@@ -123,7 +123,7 @@ Solution: Run `revolut-x-auth` setup.
 - [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
 - [Get ticker](https://developer.revolut.com/docs/x-api/get-ticker) · [Get order book](https://developer.revolut.com/docs/x-api/get-order-book) · [Get candles](https://developer.revolut.com/docs/x-api/get-candles)
 
-## Related Skills
+## Related skills
 
 | Skill | Purpose |
 |---|---|

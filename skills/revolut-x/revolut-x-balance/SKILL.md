@@ -95,7 +95,7 @@ Solution: Wait for duration in `Retry-After` header (milliseconds), then retry.
 - [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
 - [Get all balances](https://developer.revolut.com/docs/x-api/get-all-balances)
 
-## Related Skills
+## Related skills
 
 | Skill | Purpose |
 |---|---|

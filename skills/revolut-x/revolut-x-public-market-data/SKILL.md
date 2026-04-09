@@ -85,7 +85,7 @@ Solution: Use `BASE-QUOTE` dash format in the URL path, e.g. `BTC-USD`.
 - [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
 - [Get last trades](https://developer.revolut.com/docs/x-api/get-last-trades) · [Get public order book](https://developer.revolut.com/docs/x-api/get-public-order-book)
 
-## Related Skills
+## Related skills
 
 | Skill | Purpose |
 |---|---|

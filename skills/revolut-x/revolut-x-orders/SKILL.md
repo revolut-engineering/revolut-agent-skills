@@ -163,7 +163,7 @@ Solution: Wait for `Retry-After` header duration, then retry.
 - [Place order](https://developer.revolut.com/docs/x-api/place-order) · [Get active orders](https://developer.revolut.com/docs/x-api/get-active-orders) · [Get historical orders](https://developer.revolut.com/docs/x-api/get-historical-orders)
 - [Get order](https://developer.revolut.com/docs/x-api/get-order) · [Cancel order](https://developer.revolut.com/docs/x-api/cancel-order) · [Cancel all orders](https://developer.revolut.com/docs/x-api/cancel-all-orders)
 
-## Related Skills
+## Related skills
 
 | Skill | Purpose |
 |---|---|

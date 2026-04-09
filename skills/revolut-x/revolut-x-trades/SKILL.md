@@ -120,7 +120,7 @@ Solution: Run `revolut-x-auth` setup.
 - [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
 - [Get all trades](https://developer.revolut.com/docs/x-api/get-all-trades) · [Get private trades](https://developer.revolut.com/docs/x-api/get-private-trades) · [Get order fills](https://developer.revolut.com/docs/x-api/get-order-fills)
 
-## Related Skills
+## Related skills
 
 | Skill | Purpose |
 |---|---|

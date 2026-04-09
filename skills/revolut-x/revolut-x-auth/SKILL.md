@@ -128,7 +128,7 @@ Solution: Sync system clock. Timestamp must be within a few seconds of server ti
 - [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
 - [Revolut OpenAPI spec](https://github.com/revolut-engineering/revolut-openapi)
 
-## Related Skills
+## Related skills
 
 | Skill | Purpose |
 |---|---|

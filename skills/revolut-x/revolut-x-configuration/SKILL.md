@@ -92,7 +92,7 @@ Solution: Run `revolut-x-auth` setup.
 - [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
 - [Get all currencies](https://developer.revolut.com/docs/x-api/get-all-currencies)
 
-## Related Skills
+## Related skills
 
 | Skill | Purpose |
 |---|---|
