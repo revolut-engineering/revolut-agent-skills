@@ -8,13 +8,13 @@ Agent skills for the [Revolut X Crypto Exchange REST API](https://developer.revo
 
 | Skill | Description | Version | Author |
 | ----- | ----------- | ------- | ------ |
-| [revolut-x-auth](revolut-x-auth/) | API key setup, Ed25519 signing, environment configuration | — | — |
-| [revolut-x-configuration](revolut-x-configuration/) | Available currencies and trading pair constraints | — | — |
-| [revolut-x-balance](revolut-x-balance/) | Account balances (available, reserved, staked) | — | — |
-| [revolut-x-orders](revolut-x-orders/) | Place, cancel, and query orders (market, limit, conditional, TPSL) | — | — |
-| [revolut-x-trades](revolut-x-trades/) | Trade history, personal fills, order execution details | — | — |
-| [revolut-x-market-data](revolut-x-market-data/) | Order book depth, OHLCV candles, ticker prices | — | — |
-| [revolut-x-public-market-data](revolut-x-public-market-data/) | Public trades and order book (no auth required) | — | — |
+| [revolut-x-auth](revolut-x-auth/) | API key setup, Ed25519 signing, environment configuration | 0.1.0 | Revolut |
+| [revolut-x-configuration](revolut-x-configuration/) | Available currencies and trading pair constraints | 0.1.0 | Revolut |
+| [revolut-x-balance](revolut-x-balance/) | Account balances (available, reserved, staked) | 0.1.0 | Revolut |
+| [revolut-x-orders](revolut-x-orders/) | Place, cancel, and query orders (market, limit, conditional, TPSL) | 0.1.0 | Revolut |
+| [revolut-x-trades](revolut-x-trades/) | Trade history, personal fills, order execution details | 0.1.0 | Revolut |
+| [revolut-x-market-data](revolut-x-market-data/) | Order book depth, OHLCV candles, ticker prices | 0.1.0 | Revolut |
+| [revolut-x-public-market-data](revolut-x-public-market-data/) | Public trades and order book (no auth required) | 0.1.0 | Revolut |
 
 Each skill includes a `scripts/` folder with request helpers and a `references/` folder with detailed API schemas.
 
