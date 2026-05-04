@@ -58,10 +58,11 @@ Returned by GET `/orders/active`, `/orders/historical`, `/orders/{venue_order_id
 | `symbol` | string | Trading pair (e.g. `BTC-USD`) |
 | `side` | string | `buy` \| `sell` |
 | `type` | string | `market` \| `limit` \| `conditional` \| `tpsl` |
-| `quantity` | decimal string | Order size in base currency (sell: initial locked amount) |
-| `filled_quantity` | decimal string | Amount executed so far |
-| `leaves_quantity` | decimal string | Amount remaining to fill |
-| `amount` | decimal string | Order size in quote currency (buy: initial locked amount) |
+| `quantity` | decimal string | Order size in base currency. Sell: exact initial locked balance to be sold. Buy: estimated/projected total quantity to be received upon completion (exact depends on final execution prices). |
+| `filled_quantity` | decimal string | Exact quantity executed so far in base currency. Buy: total base currency received (gross, before fees). Sell: total base currency spent so far. |
+| `leaves_quantity` | decimal string | Remaining quantity not yet executed in base currency — portion of `quantity` still waiting to fill or that was cancelled. |
+| `amount` | decimal string | Order size in quote currency. Buy: initial locked balance amount. Sell: estimated/projected total value to be received upon completion. |
+| `filled_amount` | decimal string | Exact amount executed so far in quote currency. Buy: total quote currency spent so far. Sell: total quote currency received so far (gross, before fees). |
 | `price` | decimal string | Worst acceptable price (max for buy, min for sell) |
 | `average_fill_price` | decimal string | Quantity-weighted average execution price |
 | `status` | string | See order statuses below |
@@ -73,6 +74,15 @@ Returned by GET `/orders/active`, `/orders/historical`, `/orders/{venue_order_id
 | `stop_loss` | object | Present for `type=tpsl` — see OrderTrigger |
 | `created_date` | int64 | Unix epoch milliseconds |
 | `updated_date` | int64 | Unix epoch milliseconds |
+
+### GET /orders/{venue_order_id} — Additional Fields
+
+The single-order endpoint returns two extra fields not present in list responses:
+
+| Field | Type | Description |
+|---|---|---|
+| `total_fee` | decimal string | The total fee for the order |
+| `fee_currency` | string | Currency in which the fee is charged |
 
 ---
 
