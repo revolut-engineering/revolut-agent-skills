@@ -16,6 +16,7 @@ metadata:
 
 - Place market orders (buy/sell by base or quote size)
 - Place limit orders (with `allow_taker` or `post_only` execution)
+- Replace (re-place) an existing open order — atomic cancel + new order
 - View active and historical orders
 - Cancel individual orders or all open orders
 - Pre-flight validation (pair constraints + balance check)
@@ -70,6 +71,24 @@ Max date range: 30 days.
 python scripts/revx_sign.py GET /api/1.0/orders/ORDER_UUID
 ```
 
+### Replace (re-place) an order
+
+```bash
+python scripts/revx_sign.py PUT /api/1.0/orders/VENUE_ORDER_ID --body '{"client_order_id":"<uuid>","price":"50000.50","base_size":"0.1","execution_instructions":["post_only"]}'
+```
+
+Atomically cancels the original order and submits a new one. `client_order_id` is always required, plus **at least one** of `price`, `base_size`, `quote_size`, or `execution_instructions` — sending only `client_order_id` is invalid. Omitted fields are inherited from the original order.
+
+Special cases when only `price` is provided:
+- **BUY**: `quote_size` is preserved, `base_size` is recalculated
+- **SELL**: `base_size` is preserved, `quote_size` is recalculated
+
+Notes:
+- A **new** `venue_order_id` is generated for the replacement; use the id returned in the response for any follow-up calls.
+- `execution_instructions` accepts `["allow_taker"]` or `["post_only"]` only — it cannot be cleared, only re-set. Omit the field to preserve the original.
+- Only `base_size` OR `quote_size` should be supplied, not both.
+- Only open limit-style orders can be replaced.
+
 ### Cancel an order
 
 ```bash
@@ -122,7 +141,18 @@ Actions:
 
 Result: Order cancelled.
 
-### Example 4: Review and cancel all open orders
+### Example 4: Replace an open limit order's price
+User says: "Move my BTC limit buy to $94,000"
+
+Actions:
+1. Locate the order via `python scripts/revx_sign.py GET /api/1.0/orders/active --query '?symbols=BTC-USD&side=buy'`
+2. Confirm the change with the user (old price → new price, sizes unchanged)
+3. Generate a new UUID for `client_order_id`
+4. Run `python scripts/revx_sign.py PUT /api/1.0/orders/VENUE_ORDER_ID --body '{"client_order_id":"GENERATED_UUID","price":"94000"}'`
+
+Result: Original order cancelled, new order placed with updated price. Note that `venue_order_id` changes.
+
+### Example 5: Review and cancel all open orders
 User says: "Cancel all my orders"
 
 Actions:
@@ -161,7 +191,7 @@ Solution: Wait for `Retry-After` header duration, then retry.
 - [schemas.md](references/schemas.md) — Full request/response schemas, order statuses, time-in-force values, and query filters
 - [Revolut X REST API docs](https://developer.revolut.com/docs/x-api/revolut-x-crypto-exchange-rest-api)
 - [Place order](https://developer.revolut.com/docs/x-api/place-order) · [Get active orders](https://developer.revolut.com/docs/x-api/get-active-orders) · [Get historical orders](https://developer.revolut.com/docs/x-api/get-historical-orders)
-- [Get order](https://developer.revolut.com/docs/x-api/get-order) · [Cancel order](https://developer.revolut.com/docs/x-api/cancel-order) · [Cancel all orders](https://developer.revolut.com/docs/x-api/cancel-all-orders)
+- [Get order](https://developer.revolut.com/docs/x-api/get-order) · [Replace order](https://developer.revolut.com/docs/x-api/replace-order) · [Cancel order](https://developer.revolut.com/docs/x-api/cancel-order) · [Cancel all orders](https://developer.revolut.com/docs/x-api/cancel-all-orders)
 
 ## Related skills
 

@@ -6,6 +6,7 @@ Usage:
   python scripts/revx_sign.py GET /api/1.0/balances
   python scripts/revx_sign.py GET /api/1.0/orders/active --query '?symbols=BTC-USD'
   python scripts/revx_sign.py POST /api/1.0/orders --body '{"client_order_id":"...","symbol":"BTC-USD","side":"buy","order_configuration":{"market":{"quote_size":"100"}}}'
+  python scripts/revx_sign.py PUT /api/1.0/orders/ORDER_ID --body '{"client_order_id":"...","price":"50000.50"}'
   python scripts/revx_sign.py DELETE /api/1.0/orders/ORDER_ID
 
 Environment variables (required):
@@ -76,10 +77,10 @@ def sign_request(
 
 def main():
     parser = argparse.ArgumentParser(description="Revolut X signed API request")
-    parser.add_argument("method", choices=["GET", "POST", "DELETE"], help="HTTP method")
+    parser.add_argument("method", choices=["GET", "POST", "PUT", "DELETE"], help="HTTP method")
     parser.add_argument("path", help="API path, e.g. /api/1.0/balances")
     parser.add_argument("--query", default="", help="Query string with leading ?, e.g. '?symbols=BTC-USD'")
-    parser.add_argument("--body", default=None, help="JSON request body (for POST)")
+    parser.add_argument("--body", default=None, help="JSON request body (for POST/PUT)")
     args = parser.parse_args()
 
     api_key = os.environ.get("REVX_API_KEY")
@@ -105,6 +106,8 @@ def main():
         resp = httpx.get(url, headers=headers)
     elif args.method == "POST":
         resp = httpx.post(url, headers=headers, json=body)
+    elif args.method == "PUT":
+        resp = httpx.put(url, headers=headers, json=body)
     elif args.method == "DELETE":
         resp = httpx.delete(url, headers=headers)
 

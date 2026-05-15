@@ -46,6 +46,51 @@
 
 ---
 
+## Order Replacement Request
+
+`PUT /api/1.0/orders/{venue_order_id}`
+
+Replace an existing open order with a new one, atomically cancelling the original. Only the fields provided in the request are updated; omitted fields are inherited from the original order (with the exception of sizes, which may be recalculated to preserve the counter-side amount — see field docs).
+
+```json
+{
+  "client_order_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",  // UUID, required — for idempotency
+  "base_size": "0.1",                                          // optional — new base size
+  "quote_size": "500.00",                                      // optional — new quote size (only one of base_size / quote_size)
+  "price": "50000.50",                                         // optional — new limit price
+  "execution_instructions": ["post_only"]                      // optional — ["allow_taker"] or ["post_only"]; omit preserves original
+}
+```
+
+| Field | Required | Description |
+|---|---|---|
+| `client_order_id` | yes | Client-generated UUID guaranteeing idempotency of the replacement request |
+| `base_size` | no* | New base-currency amount. If only `price` is supplied: preserved for SELL, recalculated for BUY |
+| `quote_size` | no* | New quote-currency amount. If only `price` is supplied: preserved for BUY, recalculated for SELL |
+| `price` | no* | New limit price. Omitted ⇒ original price preserved |
+| `execution_instructions` | no* | `["allow_taker"]` or `["post_only"]`. Omit to preserve original. Cannot be cleared — only re-set |
+
+\* `client_order_id` is always required, and **at least one** of `base_size`, `quote_size`, `price`, or `execution_instructions` must also be provided — sending only `client_order_id` is invalid.
+
+Notes:
+- A **new** `venue_order_id` is generated for the replacement order; use the value returned in the response for any follow-up calls.
+- Only one of `base_size` / `quote_size` should be supplied.
+- The original order must still be open (not filled, cancelled, rejected, or already replaced).
+
+### Order Replacement Response
+
+```json
+{
+  "data": {
+    "venue_order_id": "7a52e92e-8639-4fe1-abaa-68d3a2d5234b",
+    "client_order_id": "984a4d8a-2a9b-4950-822f-2a40037f02bd",
+    "state": "new"
+  }
+}
+```
+
+---
+
 ## Order Object (full)
 
 Returned by GET `/orders/active`, `/orders/historical`, `/orders/{venue_order_id}`:
