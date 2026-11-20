@@ -46,7 +46,7 @@ The `skills` CLI handles downloading and placing the skills in the correct direc
 Run this command inside your project's root directory:
 
 ```bash
-npx skills add revolut/revolut-agent-skills
+npx skills add revolut-engineering/revolut-agent-skills
 ```
 
 - **Best for:** Specific repositories where you want every contributor to have the same agent capabilities.
@@ -56,7 +56,7 @@ npx skills add revolut/revolut-agent-skills
 Give your AI agent "permanent" knowledge of Revolut services across your entire machine:
 
 ```bash
-npx skills add revolut/revolut-agent-skills --global
+npx skills add revolut-engineering/revolut-agent-skills --global
 ```
 
 - **Best for:** Using tools like Cursor or Claude Code to use Revolut services regardless of which folder you have open.
@@ -80,7 +80,7 @@ If you prefer not to use the CLI, you can install the skills manually into your 
 1. **Clone this repository:**
 
     ```bash
-    git clone https://github.com/revolut/revolut-agent-skills.git
+    git clone https://github.com/revolut-engineering/revolut-agent-skills.git
     ```
 
     <!-- DEV: confirm public repo URL -->
