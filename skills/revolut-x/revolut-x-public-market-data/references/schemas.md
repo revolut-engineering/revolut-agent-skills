@@ -8,7 +8,7 @@
 
 | Field | Description |
 |---|---|
-| `tdt` | Trade timestamp (Unix epoch milliseconds) |
+| `tdt` | Trade timestamp (ISO-8601 string) |
 | `aid` | Asset ID (e.g. `BTC`) |
 | `anm` | Asset full name (e.g. `Bitcoin`) |
 | `p` | Price |
@@ -20,7 +20,7 @@
 | `tid` | Transaction ID (hex) |
 | `ve` | Venue — always `REVX` |
 | `vp` | Venue of publication — always `REVX` |
-| `pdt` | Publication timestamp |
+| `pdt` | Publication timestamp (ISO-8601 string) |
 
 ### Example Response
 
@@ -28,7 +28,7 @@
 {
   "data": [
     {
-      "tdt": 1712345678000,
+      "tdt": "2026-07-29T07:23:53.816Z",
       "aid": "BTC",
       "anm": "Bitcoin",
       "p": "95000.50",
@@ -40,7 +40,7 @@
       "tid": "a1b2c3d4",
       "ve": "REVX",
       "vp": "REVX",
-      "pdt": 1712345678001
+      "pdt": "2026-07-29T07:23:53.817Z"
     }
   ]
 }
@@ -70,7 +70,7 @@ Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
 | `s` | Side: `SELL` \| `BUYI` |
 | `ve` | Venue — always `REVX` |
 | `ts` | Trading system — always `CLOB` |
-| `pdt` | Publication timestamp |
+| `pdt` | Publication timestamp (ISO-8601 string) |
 
 ### Side Values
 
@@ -96,7 +96,7 @@ Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
         "s": "SELL",
         "ve": "REVX",
         "ts": "CLOB",
-        "pdt": 1712345678000
+        "pdt": "2026-07-29T07:23:53.816Z"
       }
     ],
     "bids": [
@@ -113,12 +113,12 @@ Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
         "s": "BUYI",
         "ve": "REVX",
         "ts": "CLOB",
-        "pdt": 1712345678000
+        "pdt": "2026-07-29T07:23:53.816Z"
       }
     ]
   },
   "metadata": {
-    "timestamp": 1712345678000
+    "timestamp": "2026-07-29T08:23:53.816Z"
   }
 }
 ```
