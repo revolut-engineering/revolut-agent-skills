@@ -69,7 +69,7 @@ def place_limit_order(symbol: str, side: str, size: str, price: str):
     body = {
         "client_order_id": "my-order-001",
         "symbol": symbol,
-        "side": side.upper(),
+        "side": side.lower(),
         "order_configuration": {
             "limit": {
                 "base_size": size,
@@ -121,7 +121,7 @@ async function placeMarketOrder(symbol, side, quoteSize) {
   const body = {
     client_order_id: `order-${Date.now()}`,
     symbol,
-    side: side.toUpperCase(),
+    side: side.toLowerCase(),
     order_configuration: {
       market: { quote_size: quoteSize }
     }
