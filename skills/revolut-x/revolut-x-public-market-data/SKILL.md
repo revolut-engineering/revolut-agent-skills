@@ -56,7 +56,7 @@ Expected output: JSON with `data[]` of candles, each `start` (Unix epoch millise
 python scripts/revx_request.py GET "/api/1.0/public/trades/all?symbol=BTC-USD&limit=100"
 ```
 
-Expected output: JSON with `data[]` of trades: `id` (UUID), `symbol` (slash format), `price`, `quantity`, `side` (`buy`/`sell`), `timestamp` (Unix epoch milliseconds), `region`. Paginate with `metadata.next_cursor`: pass it back as `?cursor=...` until it comes back empty. Optional `start_date`/`end_date` bound the range in epoch milliseconds, but the window must not exceed 1 day: an omitted `start_date` defaults to 1 day before `end_date`, and an omitted `end_date` defaults to `start_date` + 1 day (or now). For longer history, split the range into per-day windows. `limit` defaults to 100; `region` omitted returns both regions.
+Expected output: JSON with `data[]` of trades: `id` (UUID), `symbol` (slash format), `price`, `quantity`, `side` (`buy`/`sell`), `timestamp` (Unix epoch milliseconds), `region`. Paginate with `metadata.next_cursor`: pass it back as `?cursor=...` until it comes back empty. Optional `start_date`/`end_date` bound the range in epoch milliseconds, but the window must not exceed 1 day: an omitted `start_date` defaults to 1 day before `end_date`, and an omitted `end_date` defaults to `start_date` + 1 day (or now). For longer history, split the range into per-day windows. `limit` is 1-100, default 100; `region` omitted returns both regions.
 
 ### Get public order book (v2, configurable depth)
 
@@ -64,7 +64,7 @@ Expected output: JSON with `data[]` of trades: `id` (UUID), `symbol` (slash form
 python scripts/revx_request.py GET "/api/2.0/public/order-book/BTC-USD?limit=20"
 ```
 
-Expected output: JSON with `data.asks[]` and `data.bids[]`. Each level: `price`, `quantity`, `count` (order count). `limit` sets depth (default 50). `metadata` carries `region` (defaults to EEA, pass `?region=UK` for UK) and `timestamp` (epoch ms). Field names differ from the deprecated v1 order book (`p`/`q`/`no`/`s`), so do not reuse v1 parsing.
+Expected output: JSON with `data.asks[]` and `data.bids[]`. Each level: `price`, `quantity`, `count` (order count). `limit` sets depth (min 1, max 192, default 50). `metadata` carries `region` (defaults to EEA, pass `?region=UK` for UK) and `timestamp` (epoch ms). Field names differ from the deprecated v1 order book (`p`/`q`/`no`/`s`), so do not reuse v1 parsing.
 
 ### Get currencies and currency pairs configuration
 
@@ -73,7 +73,7 @@ python scripts/revx_request.py GET /api/1.0/public/configuration/currencies
 python scripts/revx_request.py GET /api/1.0/public/configuration/pairs
 ```
 
-Expected output: top-level objects keyed by currency code or pair code (no `data`/`metadata` wrapper). Currency fields: `name`, `symbol`, `scale`, `asset_type`, `status`. Pair fields: `base`, `quote`, `base_step`, `quote_step`, `min_order_size`, `max_order_size`, `min_order_size_quote`, `max_order_size_quote`, `status`, `slippage`. Optional `?region=UK|EEA`; omitted returns both regions.
+Expected output: top-level objects keyed by currency code or pair code (no `data`/`metadata` wrapper). Currency fields: `name`, `symbol`, `scale`, `asset_type`, `status`. Pair fields: `base`, `quote`, `base_step`, `quote_step`, `min_order_size`, `max_order_size`, `min_order_size_quote`, `status`. Optional `?region=UK|EEA`; omitted returns both regions.
 
 ### Get latest public trades (deprecated)
 
@@ -83,7 +83,7 @@ python scripts/revx_request.py GET /api/1.0/public/last-trades
 
 Expected output: JSON with `data[]` array of the latest 100 trades across all pairs. Fields use abbreviated names (raw wire format) — see `references/schemas.md`.
 
-Key fields: `tdt` (timestamp), `aid` (asset), `p` (price), `q` (quantity), `tid` (trade ID).
+Key fields (subset; full wire format in `references/schemas.md`): `tdt` (timestamp), `aid` (asset), `p` (price), `q` (quantity), `tid` (trade ID).
 
 ### Get public order book (deprecated)
 
