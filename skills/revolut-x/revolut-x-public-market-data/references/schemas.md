@@ -13,10 +13,10 @@
 | `anm` | Asset full name (e.g. `Bitcoin`) |
 | `p` | Price |
 | `pc` | Price currency (e.g. `USD`) |
-| `pn` | Price currency name |
+| `pn` | Price notation (e.g. `MONE`) |
 | `q` | Quantity |
 | `qc` | Quantity currency |
-| `qn` | Quantity currency name |
+| `qn` | Quantity notation (e.g. `UNIT`) |
 | `tid` | Transaction ID (hex) |
 | `ve` | Venue — always `REVX` |
 | `vp` | Venue of publication — always `REVX` |
@@ -33,16 +33,19 @@
       "anm": "Bitcoin",
       "p": "95000.50",
       "pc": "USD",
-      "pn": "US Dollar",
+      "pn": "MONE",
       "q": "0.001",
       "qc": "BTC",
-      "qn": "Bitcoin",
+      "qn": "UNIT",
       "tid": "a1b2c3d4",
       "ve": "REVX",
       "vp": "REVX",
       "pdt": "2026-07-29T07:23:53.817Z"
     }
-  ]
+  ],
+  "metadata": {
+    "timestamp": "2026-07-29T08:23:53.816Z"
+  }
 }
 ```
 
@@ -52,7 +55,7 @@
 
 `GET /api/1.0/public/order-book/{symbol}` — max 5 price levels.
 
-Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
+Response structure: `data.asks[]`, `data.bids[]`, and `metadata` (`region` and `timestamp`).
 
 ### Raw Wire Format Fields (per level)
 
@@ -62,10 +65,10 @@ Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
 | `anm` | Asset full name |
 | `p` | Price |
 | `pc` | Price currency |
-| `pn` | Price name |
+| `pn` | Price notation (e.g. `MONE`) |
 | `q` | Aggregated quantity at this level |
 | `qc` | Quantity currency |
-| `qn` | Quantity name |
+| `qn` | Quantity notation (e.g. `UNIT`) |
 | `no` | Number of orders at this level |
 | `s` | Side: `SELL` \| `BUYI` |
 | `ve` | Venue — always `REVX` |
@@ -88,11 +91,11 @@ Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
         "anm": "Bitcoin",
         "p": "95100.00",
         "pc": "USD",
-        "pn": "US Dollar",
+        "pn": "MONE",
         "q": "0.5",
         "qc": "BTC",
-        "qn": "Bitcoin",
-        "no": 3,
+        "qn": "UNIT",
+        "no": "3",
         "s": "SELL",
         "ve": "REVX",
         "ts": "CLOB",
@@ -105,11 +108,11 @@ Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
         "anm": "Bitcoin",
         "p": "95000.00",
         "pc": "USD",
-        "pn": "US Dollar",
+        "pn": "MONE",
         "q": "1.2",
         "qc": "BTC",
-        "qn": "Bitcoin",
-        "no": 5,
+        "qn": "UNIT",
+        "no": "5",
         "s": "BUYI",
         "ve": "REVX",
         "ts": "CLOB",
@@ -118,6 +121,7 @@ Response structure: `data.asks[]`, `data.bids[]`, and `metadata.timestamp`.
     ]
   },
   "metadata": {
+    "region": "EEA",
     "timestamp": "2026-07-29T08:23:53.816Z"
   }
 }
