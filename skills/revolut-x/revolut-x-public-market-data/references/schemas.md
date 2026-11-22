@@ -99,7 +99,7 @@ Path parameter: `symbol` in dash format (e.g. `BTC-USD`). Query parameters: `int
 
 `GET /api/1.0/public/trades/all` — paginated trade history.
 
-Query parameters: `symbol` (optional, dash format; omit for all pairs), `start_date` and `end_date` (Unix epoch milliseconds; the window between them must not exceed 1 day, an omitted `start_date` defaults to 1 day before `end_date`, an omitted `end_date` defaults to `start_date` + 1 day or now; split longer ranges into per-day windows), `cursor` (from `metadata.next_cursor`), `limit` (default 100), `region` (optional, `UK` or `EEA`; both regions returned when omitted).
+Query parameters: `symbol` (optional, dash format; omit for all pairs), `start_date` and `end_date` (Unix epoch milliseconds; the window between them must not exceed 1 day, an omitted `start_date` defaults to 1 day before `end_date`, an omitted `end_date` defaults to `start_date` + 1 day or now; split longer ranges into per-day windows), `cursor` (from `metadata.next_cursor`), `limit` (1-100, default 100), `region` (optional, `UK` or `EEA`; both regions returned when omitted).
 
 ### Raw Wire Format Fields
 
@@ -143,7 +143,7 @@ Query parameters: `symbol` (optional, dash format; omit for all pairs), `start_d
 
 `GET /api/2.0/public/order-book/{symbol}` — order book with configurable depth.
 
-Path parameter: `symbol` in dash format (e.g. `BTC-USD`). Query parameters: `limit` (number of price levels, default 50), `region` (`UK` or `EEA`, default `EEA`).
+Path parameter: `symbol` in dash format (e.g. `BTC-USD`). Query parameters: `limit` (number of price levels, min 1, max 192, default 50), `region` (`UK` or `EEA`, default `EEA`).
 
 Response structure: `data.asks[]`, `data.bids[]`, and `metadata`. Field names differ from the deprecated v1 order book.
 
@@ -211,9 +211,8 @@ Optional `region` query parameter (`UK` or `EEA`; both regions returned when omi
 | `base_step` | Minimum base increment |
 | `quote_step` | Minimum quote increment |
 | `min_order_size` / `max_order_size` | Order size bounds in base currency |
-| `min_order_size_quote` / `max_order_size_quote` | Order size bounds in quote currency |
+| `min_order_size_quote` | Minimum order size in quote currency |
 | `status` | e.g. `active` |
-| `slippage` | Slippage parameter (number) |
 
 ### Example Responses
 
@@ -239,9 +238,7 @@ Optional `region` query parameter (`UK` or `EEA`; both regions returned when omi
     "min_order_size": "0.000001",
     "max_order_size": "100000",
     "min_order_size_quote": "0.1",
-    "max_order_size_quote": "1000000",
-    "status": "active",
-    "slippage": 5
+    "status": "active"
   }
 }
 ```
