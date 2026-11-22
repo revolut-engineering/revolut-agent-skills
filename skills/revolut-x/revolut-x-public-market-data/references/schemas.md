@@ -99,7 +99,7 @@ Path parameter: `symbol` in dash format (e.g. `BTC-USD`). Query parameters: `int
 
 `GET /api/1.0/public/trades/all` — paginated trade history.
 
-Query parameters: `symbol` (optional, dash format; omit for all pairs), `start_date` and `end_date` (Unix epoch milliseconds), `cursor` (from `metadata.next_cursor`), `limit` (default 100), `region` (optional, `UK` or `EEA`; both regions returned when omitted).
+Query parameters: `symbol` (optional, dash format; omit for all pairs), `start_date` and `end_date` (Unix epoch milliseconds; the window between them must not exceed 1 day, an omitted `start_date` defaults to 1 day before `end_date`, an omitted `end_date` defaults to `start_date` + 1 day or now; split longer ranges into per-day windows), `cursor` (from `metadata.next_cursor`), `limit` (default 100), `region` (optional, `UK` or `EEA`; both regions returned when omitted).
 
 ### Raw Wire Format Fields
 
