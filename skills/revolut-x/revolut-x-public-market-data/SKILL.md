@@ -56,7 +56,7 @@ Expected output: JSON with `data[]` of candles, each `start` (Unix epoch millise
 python scripts/revx_request.py GET "/api/1.0/public/trades/all?symbol=BTC-USD&limit=100"
 ```
 
-Expected output: JSON with `data[]` of trades: `id` (UUID), `symbol` (slash format), `price`, `quantity`, `side` (`buy`/`sell`), `timestamp` (Unix epoch milliseconds), `region`. Paginate with `metadata.next_cursor`: pass it back as `?cursor=...` until it comes back empty. Optional `start_date`/`end_date` bound the range in epoch milliseconds; `limit` defaults to 100; `region` omitted returns both regions.
+Expected output: JSON with `data[]` of trades: `id` (UUID), `symbol` (slash format), `price`, `quantity`, `side` (`buy`/`sell`), `timestamp` (Unix epoch milliseconds), `region`. Paginate with `metadata.next_cursor`: pass it back as `?cursor=...` until it comes back empty. Optional `start_date`/`end_date` bound the range in epoch milliseconds, but the window must not exceed 1 day: an omitted `start_date` defaults to 1 day before `end_date`, and an omitted `end_date` defaults to `start_date` + 1 day (or now). For longer history, split the range into per-day windows. `limit` defaults to 100; `region` omitted returns both regions.
 
 ### Get public order book (v2, configurable depth)
 
@@ -111,7 +111,7 @@ Actions:
 2. Parse the `data[]` array
 3. Present recent trades with asset, price, quantity, timestamp
 
-Result: Table of last 100 trades across all pairs.
+Result: Table of the 20 most recent trades across all pairs.
 
 ## Error handling
 
